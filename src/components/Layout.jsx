@@ -1,17 +1,25 @@
-export default function Layout() {
+import { Link } from "react-router-dom";
+
+export default function Layout({children}) {
     return (
+        <>
         <header>
             <nav>
-                <Link to="/" id="logo"></Link>
+                <Link to="/" id="Logo">Halo Reach</Link>
                 <ul>
                     <li>
-                        <Link to="login"></Link>
+                        <Link to="Login">Login</Link>
                     </li>
                     <li>
-                        <Link to="signup"></Link>
+                        <Link to="Signup">Signup</Link>
                     </li>
                 </ul>
             </nav>
         </header>
+        {children}
+        <footer>
+            Halo Reach 2010
+        </footer>
+        </>
     )
 }
