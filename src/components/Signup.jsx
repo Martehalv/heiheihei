@@ -1,13 +1,21 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [user, setUser] = useState([]);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const inputValue = e.target.value;
     const inputName = e.target.name;
-    setUser((prev) => ({ ...prev, [inputName]: inputValue}));
+    setUser((prev) => ({ ...prev, [inputName]: inputValue }));
     console.log(user);
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    localStorage.setItem("user", JSON.stringify(user));
+    navigate("/login");
   };
 
   return (
@@ -50,7 +58,7 @@ export default function Signup() {
             placeholder="*******"
           />
         </label>
-        <button>Register New Account</button>
+        <button onClick={handleClick}>Register</button>
       </form>
     </section>
   );
