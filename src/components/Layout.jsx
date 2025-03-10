@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import "../styles/layout.scss";
 
-export default function Layout({ children }) {
+export default function Layout({ children, signedIn, setSignedIn }) {
+  const handleLogout = () => {
+    sessionStorage.setItem("login", false);
+    setSignedIn(false);
+  };
   return (
     <>
       <header>
@@ -10,12 +14,23 @@ export default function Layout({ children }) {
             Connectis
           </Link>
           <ul>
-            <li>
-              <Link to="Login">Login</Link>
-            </li>
-            <li>
-              <Link to="Signup">Signup</Link>
-            </li>
+            {signedIn ? (
+              <>
+                <li>Username</li>
+                <li>
+                  <button onClick={handleLogout}>Logg ut</button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="Login">Login</Link>
+                </li>
+                <li>
+                  <Link to="Signup">Signup</Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       </header>

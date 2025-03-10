@@ -1,18 +1,54 @@
-export default function Login() {
+import { useState } from "react";
+
+export default function Login({ storageUser, setSignedIn, signedIn }) {
+  const [userLogin, setUserLogin] = useState([]);
+  const [error, setError] = useState();
+
+  const handleChange = (e) => {
+    const inputName = e.target.name;
+    const inputValue = e.target.value;
+    setUserLogin((prev) => ({ ...prev, [inputName]: inputValue }));
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    const existingUser = JSON.parse(storageUser);
+    const exists =
+      userLogin.username === existingUser.username &&
+      userLogin.password === existingUser.password;
+    console.log(exists);
+    exists
+      ? setSignedIn(true)
+      : setError("Brukernavn eller passord stemmer ikke");
+
+    sessionStorage.setItem("login", true);
+  };
+
   return (
     <section>
-      <h1>Login</h1>
+      <h1>Logg inn</h1>
       <form>
         <label>
-          Username
-          <input type="text" placeholder="Jhonny..." />
+          Brukernavn
+          <input
+            type="text"
+            placeholder="Jhonny..."
+            name="username"
+            onChange={handleChange}
+          />
         </label>
         <label>
-          Password
-          <input type="password" placeholder="*" />
+          Passord
+          <input
+            type="password"
+            placeholder="******"
+            name="password"
+            onChange={handleChange}
+          />
         </label>
-        <button>Login</button>
+        <button onClick={handleClick}>Logg inn</button>
       </form>
+      {error}
     </section>
   );
 }
